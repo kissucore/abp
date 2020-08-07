@@ -32,11 +32,16 @@ In this tutorial series, you will build an ABP based web application named `Acme
 
 This tutorial is organized as the following parts;
 
-- [Part 1: Creating the project and book list page](Part-1.md)
+- [Part 1: Creating the server side](Part-1.md)
 - [Part 2: The book list page](Part-2.md)
 - [Part 3: Creating, updating and deleting books](Part-3.md)
 - [Part 4: Integration tests](Part-4.md)
 - **Part 5: Authorization (this part)**
+- [Part 6: Authors: Domain layer](Part-6.md)
+- [Part 7: Authors: Database Integration](Part-7.md)
+- [Part 8: Authors: Application Layer](Part-8.md)
+- [Part 9: Authors: User Interface](Part-9.md)
+- [Part 10: Book to Author Relation](Part-10.md)
 
 ### Download the Source Code
 
@@ -53,7 +58,7 @@ ABP Framework provides an [authorization system](../Authorization.md) based on t
 
 A permission must have a unique name (a `string`). The best way is to define it as a `const`, so we can reuse the permission name.
 
-Open the `BookStorePermissions` class inside the `Acme.BookStore.Application.Contracts` project and change the content as shown below:
+Open the `BookStorePermissions` class inside the `Acme.BookStore.Application.Contracts` project (in the `Permissions` folder) and change the content as shown below:
 
 ````csharp
 namespace Acme.BookStore.Permissions
@@ -79,7 +84,7 @@ This is a hierarchical way of defining permission names. For example, "create bo
 
 You should define permissions before using them.
 
-Open the `BookStorePermissionDefinitionProvider` class inside the `Acme.BookStore.Application.Contracts` project and change the content as shown below:
+Open the `BookStorePermissionDefinitionProvider` class inside the `Acme.BookStore.Application.Contracts` project (in the `Permissions` folder) and change the content as shown below:
 
 ````csharp
 using Acme.BookStore.Localization;
@@ -399,3 +404,6 @@ Open the `/src/app/book/book.component.html` file and replace the edit and delet
 
 {{end}}
 
+## The Next Part
+
+See the [next part](Part-6.md) of this tutorial.

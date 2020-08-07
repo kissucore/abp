@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Volo.Abp;
@@ -19,32 +20,38 @@ namespace Volo.CmsKit.Reactions
             ReactionDefinitionStore = reactionDefinitionStore;
         }
 
-        public virtual async Task<List<ReactionDefinition>> GetAvailableReactionsAsync(
-            [CanBeNull] string entityType = null,
-            [CanBeNull] Guid? userId = null)
+        public virtual async Task<List<ReactionDefinition>> GetReactionsAsync(
+            [CanBeNull] string entityType = null)
         {
-            return await ReactionDefinitionStore.GetAvailableReactionsAsync(entityType, userId);
+            return await ReactionDefinitionStore.GetReactionsAsync(entityType);
         }
 
-        public virtual Task<ReactionSummary> GetSummariesAsync(
+        public virtual async Task<List<ReactionSummary>> GetSummariesAsync(
             [NotNull] string entityType,
             [NotNull] string entityId)
         {
-            //TODO: ...
-            throw new NotImplementedException();
-        }
+            Check.NotNullOrWhiteSpace(entityType, nameof(entityType));
+            Check.NotNullOrWhiteSpace(entityId, nameof(entityId));
 
-        public virtual Task<ReactionDefinition> GetUserReactionsAsync(
-            Guid userId,
-            [NotNull] string entityType,
-            [NotNull] string entityId)
-        {
-            //TODO: ...
-            throw new NotImplementedException();
+            var userReactionCounts = (await UserReactionRepository.GetSummariesAsync(entityType, entityId))
+                .ToDictionary(x => x.ReactionName, x => x.Count);
+
+            var reactions = await ReactionDefinitionStore
+                .GetReactionsAsync(
+                    entityType
+                );
+
+            return reactions
+                .Select(reaction => new ReactionSummary
+                {
+                    Reaction = reaction,
+                    Count = userReactionCounts.GetOrDefault(reaction.Name)
+                })
+                .ToList();
         }
 
         public virtual async Task<UserReaction> CreateAsync(
-            Guid userId,
+            Guid creatorId,
             [NotNull] string entityType,
             [NotNull] string entityId,
             [NotNull] string reactionName)
@@ -53,7 +60,7 @@ namespace Volo.CmsKit.Reactions
             Check.NotNullOrWhiteSpace(entityId, nameof(entityId));
             Check.NotNullOrWhiteSpace(reactionName, nameof(reactionName));
 
-            var existingReaction = await UserReactionRepository.FindAsync(userId, entityType, entityId, reactionName);
+            var existingReaction = await UserReactionRepository.FindAsync(creatorId, entityType, entityId, reactionName);
             if (existingReaction != null)
             {
                 return existingReaction;
@@ -62,11 +69,10 @@ namespace Volo.CmsKit.Reactions
             return await UserReactionRepository.InsertAsync(
                 new UserReaction(
                     GuidGenerator.Create(),
-                    userId,
                     entityType,
                     entityId,
                     reactionName,
-                    Clock.Now
+                    creatorId
                 )
             );
         }
@@ -77,6 +83,10 @@ namespace Volo.CmsKit.Reactions
             [NotNull] string entityId,
             [NotNull] string reactionName)
         {
+            Check.NotNullOrWhiteSpace(entityType, nameof(entityType));
+            Check.NotNullOrWhiteSpace(entityId, nameof(entityId));
+            Check.NotNullOrWhiteSpace(reactionName, nameof(reactionName));
+
             var existingReaction = await UserReactionRepository.FindAsync(userId, entityType, entityId, reactionName);
             if (existingReaction == null)
             {
@@ -86,12 +96,5 @@ namespace Volo.CmsKit.Reactions
             await UserReactionRepository.DeleteAsync(existingReaction);
             return true;
         }
-    }
-
-    public class ReactionSummary
-    {
-        public ReactionDefinition Reaction { get; set; }
-
-        public int Count { get; set; }
     }
 }

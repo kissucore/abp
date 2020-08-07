@@ -47,6 +47,26 @@
             {
               "text": "5: Authorization",
               "path": "Tutorials/Part-5.md"
+            },
+            {
+              "text": "6: Authors: Domain layer",
+              "path": "Tutorials/Part-6.md"
+            },
+            {
+              "text": "7: Authors: Database Integration",
+              "path": "Tutorials/Part-7.md"
+            },
+            {
+              "text": "8: Authors: Application Layer",
+              "path": "Tutorials/Part-8.md"
+            },
+            {
+              "text": "9: Authors: User Interface",
+              "path": "Tutorials/Part-9.md"
+            },
+            {
+              "text": "10: Book to Author Relation",
+              "path": "Tutorials/Part-10.md"
             }
           ]
         }
@@ -74,10 +94,6 @@
           ]
         },
         {
-          "text": "\"How to\" Guides",
-          "path": "How-To/Index.md"
-        },
-        {
           "text": "Migrating from the ASP.NET Boilerplate",
           "path": "AspNet-Boilerplate-Migration-Guide.md"
         }
@@ -86,6 +102,15 @@
     {
       "text": "CLI",
       "path": "CLI.md"
+    },
+    {
+      "text": "Authentication",
+      "items": [
+        {
+          "text": "Social/External Logins",
+          "path": "Authentication/Social-External-Logins.md"
+        }
+      ]
     },
     {
       "text": "Fundamentals",
@@ -217,11 +242,23 @@
                   "path": "Blob-Storing-Azure.md"
                 },
                 {
+                  "text": "Aliyun Provider",
+                  "path": "Blob-Storing-Aliyun.md"
+                },
+                {
+                  "text": "Minio Provider",
+                  "path": "Blob-Storing-Minio.md"
+                },
+                {
+                  "text": "AWS Provider",
+                  "path": "Blob-Storing-Aws.md"
+                },
+                {
                   "text": "Create a Custom Provider",
                   "path": "Blob-Storing-Custom-Provider.md"
                 }
               ]
-            }            
+            }
           ]
         },
         {
@@ -395,6 +432,10 @@
               "path": "UI/Angular/Permission-Management.md"
             },
             {
+              "text": "Multi Tenancy",
+              "path": "UI/Angular/Multi-Tenancy.md"
+            },
+            {
               "text": "Confirmation Popup",
               "path": "UI/Angular/Confirmation-Service.md"
             },
@@ -433,6 +474,10 @@
             {
               "text": "TrackByService",
               "path": "UI/Angular/Track-By-Service.md"
+            },
+            {
+              "text": "SubscriptionService",
+              "path": "UI/Angular/Subscription-Service.md"
             },
             {
               "text": "ListService",

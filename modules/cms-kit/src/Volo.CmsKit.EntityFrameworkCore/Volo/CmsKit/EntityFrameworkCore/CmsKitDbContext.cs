@@ -1,17 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.CmsKit.Comments;
+using Volo.CmsKit.Reactions;
+using Volo.CmsKit.Users;
 
 namespace Volo.CmsKit.EntityFrameworkCore
 {
     [ConnectionStringName(CmsKitDbProperties.ConnectionStringName)]
     public class CmsKitDbContext : AbpDbContext<CmsKitDbContext>, ICmsKitDbContext
     {
-        /* Add DbSet for each Aggregate Root here. Example:
-         * public DbSet<Question> Questions { get; set; }
-         */
+        public DbSet<UserReaction> UserReactions { get; set; }
 
-        public CmsKitDbContext(DbContextOptions<CmsKitDbContext> options) 
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<CmsUser> CmsUsers { get; set; }
+
+        public CmsKitDbContext(DbContextOptions<CmsKitDbContext> options)
             : base(options)
         {
 

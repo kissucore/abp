@@ -37,6 +37,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Volo.CmsKit.Application\Volo.CmsKit.Application.csproj" />
     <ProjectReference Include="..\..\src\Volo.CmsKit.EntityFrameworkCore\Volo.CmsKit.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\Volo.CmsKit.Application\Volo.CmsKit.Application.csproj" />
     <ProjectReference Include="..\..\src\Volo.CmsKit.Web\Volo.CmsKit.Web.csproj" />
     <ProjectReference Include="..\Volo.CmsKit.Host.Shared\Volo.CmsKit.Host.Shared.csproj" />
   </ItemGroup>
@@ -46,6 +47,16 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
+    <Content Update="Pages\Public.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Compile Update="Pages\Public.cshtml.cs">
+      <DependentUpon>public.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Public.cshtml.cs">
+      <DependentUpon>Public.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
